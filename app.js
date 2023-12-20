@@ -2,8 +2,10 @@ require("dotenv").config();
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
+const passport = require("passport");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const User = require("./models/user");
 
 var indexRouter = require("./routes/index");
 const catalogRouter = require("./routes/catalog");
@@ -20,6 +22,48 @@ async function main() {
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
+
+app.use(
+  session({
+    secret: process.env.SessionSecret,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      const user = await User.findOne({ username: username });
+      if (!user) {
+        return done(null, false, { message: "Incorrect username" });
+      }
+      if (user.password !== password) {
+        return done(null, false, { message: "Incorrect password" });
+      }
+      return done(null, user);
+    } catch (err) {
+      return done(err);
+    }
+  })
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.urlencoded({ extended: false }));
 
 app.use(logger("dev"));
 app.use(express.json());
