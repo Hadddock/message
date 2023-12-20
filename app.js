@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ override: true });
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
@@ -6,6 +6,8 @@ const passport = require("passport");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const User = require("./models/user");
+const session = require("express-session");
+const LocalStrategy = require("passport-local").Strategy;
 
 var indexRouter = require("./routes/index");
 const catalogRouter = require("./routes/catalog");
