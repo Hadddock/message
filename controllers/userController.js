@@ -20,6 +20,12 @@ exports.sign_up_post = [
     .trim()
     .isLength({ min: 3, max: 64 })
     .withMessage("Username must be between 3-64 characters")
+    .custom(async (value) => {
+      const usernameTaken = await User.findOne({ username: value }).exec();
+      if (usernameTaken) {
+        throw new Error("Username is already taken");
+      }
+    })
     .escape(),
   body("password", "Password must be at least 8 characters")
     .trim()
