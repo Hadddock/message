@@ -7,6 +7,15 @@ exports.login_get = asyncHandler(async (req, res, next) => {
   res.render("login");
 });
 
+exports.logout_post = (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+};
+
 exports.login_post = passport.authenticate("local", {
   successRedirect: "/",
   failureRedirect: "/",
@@ -65,7 +74,10 @@ exports.sign_up_post = [
       return;
     } else {
       await user.save();
-      res.send("User created!");
+      passport.authenticate("local", {
+        successRedirect: "/",
+        failureRedirect: "/",
+      });
     }
   }),
 ];
