@@ -1,5 +1,16 @@
 html
   head
-    title "Member"
+    title Member
+  header 
+    if user
+      form(action="/logout" method="Post")
+        button Log out
+    else 
+      form(action="/sign-up" method="Get")
+          button Create account
+      form(action="/login" method="Get")
+          button Login
+      
+
   body
     block content
