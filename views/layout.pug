@@ -2,15 +2,16 @@ html
   head
     title Member
   header 
-    if user
+
+    if currentUser
       form(action="/logout" method="Post")
         button Log out
+      form(action="/create-post" method="get")
+        button Create Post
     else 
       form(action="/sign-up" method="Get")
           button Create account
       form(action="/login" method="Get")
           button Login
-      
-
   body
     block content
