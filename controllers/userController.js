@@ -74,10 +74,7 @@ exports.sign_up_post = [
       return;
     } else {
       await user.save();
-      passport.authenticate("local", {
-        successRedirect: "/",
-        failureRedirect: "/",
-      });
+      res.redirect("/login");
     }
   }),
 ];
