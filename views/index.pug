@@ -11,13 +11,8 @@ block content
           for post in posts 
             li
               p=post.message
-              p=post.dateCreated
-              if post.user 
-                p=post.user.username
-              else 
-                p No comment
-
-       
+              p=post.date_created
+              p=post.user.username
         else 
           for post in posts 
             li= post.message

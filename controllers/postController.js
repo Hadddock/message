@@ -20,10 +20,10 @@ exports.home_page = asyncHandler(async (req, res, next) => {
   if (req.user && req.user.membership_status) {
     allPosts = await Post.find()
       .populate("user")
-      .sort({ dateCreated: 1 })
+      .sort({ date_created: 1 })
       .exec();
   } else {
-    allPosts = await Post.find({}).sort({ dateCreated: 1 }).exec();
+    allPosts = await Post.find({}).sort({ date_created: 1 }).exec();
   }
   res.render("index", { posts: allPosts });
 });
