@@ -21,6 +21,35 @@ exports.login_post = passport.authenticate("local", {
   failureRedirect: "/",
 });
 
+exports.join_club_get = asyncHandler(async (req, res, next) => {
+  res.render("join-club");
+});
+
+exports.join_club_post = [
+  body("password")
+    .trim()
+    .matches(process.env.Password)
+    .withMessage(
+      "Incorrect password provided. Membership has not been granted."
+    ),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render("join-club", { errors: errors.array() });
+    }
+
+    if (req.user) {
+      await User.findOneAndUpdate(
+        { username: req.user.username },
+        { membership_status: true }
+      ).exec();
+    }
+    res.redirect("/");
+  }),
+];
+
 exports.sign_up_get = asyncHandler(async (req, res, next) => {
   res.render("sign-up");
 });

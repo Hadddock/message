@@ -8,6 +8,11 @@ html
         button Log out
       form(action="/create-post" method="get")
         button Create Post
+      if !currentUser.membership_status
+        form(action="/join-club" method="get")
+          button Join the Club
+      else 
+        p Welcome to the club.
     else 
       form(action="/sign-up" method="Get")
           button Create account
