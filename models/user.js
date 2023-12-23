@@ -7,6 +7,7 @@ const UserSchema = new Schema({
   username: { type: String, required: true, minlength: 3, maxLength: 64 },
   password: { type: String, required: true, minLength: 8 },
   membership_status: { type: Boolean, required: true },
+  admin: { type: Boolean },
 });
 
 UserSchema.virtual("full_name").get(function () {

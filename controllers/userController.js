@@ -50,6 +50,33 @@ exports.join_club_post = [
   }),
 ];
 
+exports.become_admin_get = asyncHandler(async (req, res, next) => {
+  res.render("become-admin");
+});
+
+exports.become_admin_post = [
+  body("password")
+    .trim()
+    .matches(process.env.AdminPassword)
+    .withMessage("Incorrect password provided. Not an administator."),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render("become-admin", { errors: errors.array() });
+    }
+
+    if (req.user) {
+      await User.findOneAndUpdate(
+        { username: req.user.username },
+        { admin: true }
+      ).exec();
+    }
+    res.redirect("/");
+  }),
+];
+
 exports.sign_up_get = asyncHandler(async (req, res, next) => {
   res.render("sign-up");
 });

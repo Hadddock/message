@@ -13,6 +13,9 @@ router.post("/login", user_controller.login_post);
 router.get("/join-club", user_controller.join_club_get);
 router.post("/join-club", user_controller.join_club_post);
 
+router.get("/become-admin", user_controller.become_admin_get);
+router.post("/become-admin", user_controller.become_admin_post);
+
 router.post("/logout", user_controller.logout_post);
 
 router.get("/create-post", post_controller.create_post_get);

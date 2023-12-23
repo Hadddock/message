@@ -12,7 +12,13 @@ html
         form(action="/join-club" method="get")
           button Join the Club
       else 
+        if !currentUser.admin
+            form(action="/become-admin" method="get")
+              button Become an admin
+        else 
+          p You are an admin
         p Welcome to the club.
+        
     else 
       form(action="/sign-up" method="Get")
           button Create account
