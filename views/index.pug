@@ -7,7 +7,7 @@ block content
   if posts 
     ul
       if currentUser 
-        if currentUser.membership_status
+        if currentUser.membership_status || currentUser.admin
           for post in posts 
             li
               p=post.message
