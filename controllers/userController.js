@@ -18,7 +18,7 @@ exports.logout_post = (req, res, next) => {
 
 exports.login_post = passport.authenticate("local", {
   successRedirect: "/",
-  failureRedirect: "/",
+  failureRedirect: "/login",
 });
 
 exports.join_club_get = asyncHandler(async (req, res, next) => {
