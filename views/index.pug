@@ -6,8 +6,20 @@ block content
     h1= "You're not logged in!"
   if posts 
     ul
-      for post in posts 
-        li= post.message
+      if currentUser 
+        if currentUser.membership_status
+          for post in posts 
+            li
+              p=post.message
+              p=post.dateCreated
+              if post.user 
+                p=post.user.username
+              else 
+                p No comment
 
+       
+        else 
+          for post in posts 
+            li= post.message
+            
 
-  

@@ -17,14 +17,14 @@ exports.create_post_get = (req, res, next) => {
 
 exports.home_page = asyncHandler(async (req, res, next) => {
   let allPosts;
-  if (res.currentUser && res.currentUser.membershipStatus) {
-    allPosts = await Post.find({ dateCreated, message })
+  if (req.user && req.user.membership_status) {
+    allPosts = await Post.find()
+      .populate("user")
       .sort({ dateCreated: 1 })
       .exec();
   } else {
+    allPosts = await Post.find({}).sort({ dateCreated: 1 }).exec();
   }
-  console.log(res.currentUser);
-  allPosts = await Post.find({}).sort({ dateCreated: 1 }).exec();
   res.render("index", { posts: allPosts });
 });
 
