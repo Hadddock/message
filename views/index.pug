@@ -13,6 +13,11 @@ block content
               p=post.message
               p=post.date_created
               p=post.user.username
+              if currentUser.admin 
+                form(action="/delete-post" method="post")
+                  button Delete this post
+                   input(type="hidden" id="post_id" name="post_id" value=post._id)
+
         else 
           for post in posts 
             li= post.message

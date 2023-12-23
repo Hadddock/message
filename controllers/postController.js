@@ -15,6 +15,11 @@ exports.create_post_get = (req, res, next) => {
   res.render("createMessage");
 };
 
+exports.delete_post_post = asyncHandler(async (req, res, next) => {
+  await Post.findByIdAndDelete(req.body.post_id).exec();
+  res.redirect("/");
+});
+
 exports.home_page = asyncHandler(async (req, res, next) => {
   let allPosts;
   if (req.user && req.user.membership_status) {

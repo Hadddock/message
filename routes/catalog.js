@@ -21,6 +21,8 @@ router.post("/logout", user_controller.logout_post);
 router.get("/create-post", post_controller.create_post_get);
 router.post("/create-post", post_controller.create_post_post);
 
+router.post("/delete-post", post_controller.delete_post_post);
+
 router.get("/", post_controller.home_page);
 
 module.exports = router;
