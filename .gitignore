@@ -8,6 +8,9 @@ package-lock.json
 .nyc_output
 coverage
 
+npm-debug.log
+.DS_Store
+
 # Benchmarking
 benchmarks/graphs
 
