@@ -2,15 +2,6 @@ const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 const Post = require("./../models/post");
 
-exports.create_post_post = (req, res, next) => {
-  req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/");
-  });
-};
-
 exports.create_post_get = (req, res, next) => {
   res.render("createMessage");
 };
