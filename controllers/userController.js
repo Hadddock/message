@@ -1,6 +1,7 @@
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 const passport = require("passport");
+const bcrypt = require("bcryptjs");
 const User = require("./../models/user");
 
 exports.login_get = asyncHandler(async (req, res, next) => {
@@ -116,12 +117,14 @@ exports.sign_up_post = [
   asyncHandler(async (req, res, next) => {
     //extract validation errors from request
     const errors = validationResult(req);
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
     //create new user object
     const user = new User({
       first_name: req.body.first_name,
       family_name: req.body.family_name,
       username: req.body.username,
-      password: req.body.password,
+      password: hashedPassword,
       membership_status: false,
     });
     //render form again with errors
@@ -130,6 +133,7 @@ exports.sign_up_post = [
       return;
     } else {
       await user.save();
+
       res.redirect("/login");
     }
   }),
